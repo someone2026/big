@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件正式名称 - 专题介绍</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+      background-color: #0f1115;
+      color: #e8e6e3;
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    /* 顶部导航 */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(15, 17, 21, 0.95);
+      border-bottom: 1px solid #2a2e35;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #d4af37;
+    }
+
+    .nav-links a {
+      color: #c9c5be;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #d4af37;
+    }
+
+    /* 首屏 Hero */
+    .hero {
+      height: 100vh;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(15, 17, 21, 0.75), rgba(15, 17, 21, 0.9)),
+                  url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600') center/cover no-repeat;
+      padding: 0 30px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 600;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      color: #f5f3ef;
+    }
+
+    .hero-content .subtitle {
+      font-size: 1.25rem;
+      color: #d4af37;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+
+    .hero-content .intro {
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #c9c5be;
+      line-height: 1.9;
+    }
+
+    /* 内容区域通用 */
+    section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 90px 30px;
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #d4af37;
+      margin-bottom: 50px;
+      letter-spacing: 3px;
+      text-align: center;
+      position: relative;
+    }
+
+    section h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: #d4af37;
+      margin: 18px auto 0;
+    }
+
+    p {
+      margin-bottom: 26px;
+      color: #d1cec8;
+      text-align: justify;
+    }
+
+    /* 事件人物板块 */
+    .person-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .person-card {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      background: #161a20;
+      border: 1px solid #2a2e35;
+      padding: 30px;
+      border-radius: 4px;
+    }
+
+    .person-avatar {
+      flex-shrink: 0;
+      width: 160px;
+      height: 200px;
+      object-fit: cover;
+      border: 1px solid #3a3f48;
+    }
+
+    .person-info h3 {
+      font-size: 1.4rem;
+      color: #f0ece6;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .person-info .meta {
+      color: #d4af37;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .person-info p {
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+      line-height: 1.75;
+    }
+
+    /* 证据板块 */
+    .evidence-text {
+      margin-bottom: 40px;
+    }
+
+    /* 分类按钮 */
+    .evidence-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+
+    .evidence-tab {
+      padding: 12px 36px;
+      background: transparent;
+      border: 1px solid #3a3f48;
+      color: #c9c5be;
+      font-size: 16px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .evidence-tab:hover {
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+
+    .evidence-tab.active {
+      background: #d4af37;
+      border-color: #d4af37;
+      color: #0f1115;
+    }
+
+    /* 图片画廊 */
+    .evidence-gallery {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .evidence-gallery.active {
+      display: grid;
+    }
+
+    .evidence-gallery img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border: 1px solid #3a3f48;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #1a1e25;
+    }
+
+    .evidence-gallery img:hover {
+      border-color: #d4af37;
+      transform: translateY(-3px);
+    }
+
+    /* 图片放大灯箱 */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 88vh;
+      border: 1px solid #3a3f48;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 25px;
+      right: 35px;
+      color: #d4af37;
+      font-size: 36px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* 分隔线 */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #3a3f48, transparent);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* 页脚 */
+    footer {
+      text-align: center;
+      padding: 60px 30px;
+      background: #0a0c0f;
+      border-top: 1px solid #2a2e35;
+      color: #8a8680;
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .nav-links a {
+        margin-left: 16px;
+        font-size: 14px;
+      }
+
+      section {
+        padding: 70px 20px;
+      }
+
+      .person-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 25px;
+      }
+
+      .person-avatar {
+        width: 140px;
+        height: 175px;
+      }
+
+      .evidence-tabs {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .evidence-tab {
+        width: 80%;
+        text-align: center;
+      }
+
+      .evidence-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <header>
+    <nav>
+      <div class="logo">大事件档案馆</div>
+      <div class="nav-links">
+        <a href="#overview">概述</a>
+        <a href="#figures">人物</a>
+        <a href="#evidence">证据</a>
+        <a href="#significance">意义</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 首屏 -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>中国女法官婚内出轨</h1>
+      <div class="subtitle">2026年10月1日 · 安阳</div>
+      <p class="intro">
+        法官的判决关乎当事人的命运走向，担任这个事业的人应该是有严格的自我要求和道德水准的，然而中国河南省安阳市的一个女法官婚内出轨，曝出的聊天内容污秽不堪，少儿不宜，这不禁让公众担忧，
+        我们的公平正义就靠这些人来守护吗 ？
+      </p>
+    </div>
+  </section>
+
+  <!-- 事件概述 -->
+  <section id="overview">
+    <h2>事件概述</h2>
+    <p>
+     据现有资料显示，河南省安阳市文峰区法院女法官殷存霞自2023年11月起，在婚姻存续期内出轨，和情人的私密聊天大量流出，内容尺度巨大，少儿不宜。
+    </p>
+    <p>
+      可继续补充关键事实、主要参与方以及事件发生时的宏观环境。保持正式书面语风格。
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 事件人物板块 -->
+  <section id="figures">
+    <h2>事件人物</h2>
+    <div class="person-list">
+
+      <div class="person-card">
+        <img class="person-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop" alt="人物姓名">
+        <div class="person-info">
+          <h3>人物姓名</h3>
+          <div class="meta">身份 / 职务 · 生卒年</div>
+          <p>简要介绍该人物在事件中的角色与相关背景。文字保持客观克制。</p>
+          <p>可补充其主要经历或在事件中的具体行为。</p>
+        </div>
+      </div>
+
+      <div class="person-card">
+        <img class="person-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop" alt="人物姓名">
+        <div class="person-info">
+          <h3>人物姓名</h3>
+          <div class="meta">身份 / 职务 · 生卒年</div>
+          <p>简要介绍该人物在事件中的角色与相关背景。文字保持客观克制。</p>
+          <p>可补充其主要经历或在事件中的具体行为。</p>
+        </div>
+      </div>
+
+      <div class="person-card">
+        <img class="person-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop" alt="人物姓名">
+        <div class="person-info">
+          <h3>人物姓名</h3>
+          <div class="meta">身份 / 职务 · 生卒年</div>
+          <p>简要介绍该人物在事件中的角色与相关背景。文字保持客观克制。</p>
+          <p>可补充其主要经历或在事件中的具体行为。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 证据板块 -->
+  <section id="evidence">
+    <h2>相关证据</h2>
+    
+    <div class="evidence-text">
+      <p>
+        以下证据材料分为「身份证据」与「行为证据」两类。点击对应分类即可查看相关图片。所有材料均来源于公开渠道或官方档案，仅作历史介绍使用。
+      </p>
+    </div>
+
+    <!-- 分类按钮 -->
+    <div class="evidence-tabs">
+      <button class="evidence-tab active" onclick="switchEvidence('identity')">身份证据</button>
+      <button class="evidence-tab" onclick="switchEvidence('behavior')">行为证据</button>
+    </div>
+
+    <!-- 身份证据图片 -->
+    <div class="evidence-gallery active" id="gallery-identity">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600" alt="身份证据1" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=600" alt="身份证据2" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600" alt="身份证据3" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600" alt="身份证据4" onclick="openLightbox(this)">
+    </div>
+
+    <!-- 行为证据图片 -->
+    <div class="evidence-gallery" id="gallery-behavior">
+      <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600" alt="行为证据1" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600" alt="行为证据2" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600" alt="行为证据3" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600" alt="行为证据4" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600" alt="行为证据5" onclick="openLightbox(this)">
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 意义与影响 -->
+  <section id="significance">
+    <h2>历史意义与影响</h2>
+    <p>
+      客观阐述事件的历史地位、深远影响以及对后世的启示。文字应保持庄重与克制。
+    </p>
+    <p>
+      可从政治、社会、文化等多个维度进行总结，但避免空洞口号。
+    </p>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <p>本页面仅作历史事件介绍用途</p>
+    <p>资料来源：公开历史文献与官方档案</p>
+    <p style="margin-top: 25px; color: #5a5650;">© 2026 事件专题页</p>
+  </footer>
+
+  <!-- 图片放大灯箱 -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="放大图片">
+  </div>
+
+  <script>
+    // 切换证据分类
+    function switchEvidence(type) {
+      // 切换按钮状态
+      const tabs = document.querySelectorAll('.evidence-tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      
+      if (type === 'identity') {
+        tabs[0].classList.add('active');
+      } else {
+        tabs[1].classList.add('active');
+      }
+
+      // 切换图片画廊
+      document.getElementById('gallery-identity').classList.remove('active');
+      document.getElementById('gallery-behavior').classList.remove('active');
+      
+      if (type === 'identity') {
+        document.getElementById('gallery-identity').classList.add('active');
+      } else {
+        document.getElementById('gallery-behavior').classList.add('active');
+      }
+    }
+
+    // 图片放大
+    function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ESC 关闭灯箱
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+  </script>
+
+</body>
+</html>
