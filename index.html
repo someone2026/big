@@ -126,51 +126,89 @@
       text-align: justify;
     }
 
-    /* 事件人物板块 */
-    .person-list {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
+  /* 事件人物板块 */
+.person-list {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
 
-    .person-card {
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
-      background: #161a20;
-      border: 1px solid #2a2e35;
-      padding: 30px;
-      border-radius: 4px;
-    }
+.person-card {
+  display: flex;
+  flex-direction: column;   /* 改为纵向 */
+  align-items: center;      /* 水平居中 */
+  gap: 28px;
+  background: #161a20;
+  border: 1px solid #2a2e35;
+  padding: 40px 30px;
+  border-radius: 4px;
+  text-align: center;       /* 文字居中 */
+}
 
-    .person-avatar {
-      flex-shrink: 0;
-      width:160px;
-      height: 200px;
-      object-fit: cover;
-      border: 1px solid #3a3f48;
-    }
+.person-avatar {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 320px;         /* 大图宽度，可按需调整 */
+  height: auto;
+  aspect-ratio: 4 / 5;      /* 保持人像比例 */
+  object-fit: cover;
+  border: 1px solid #3a3f48;
+}
 
-    .person-info h3 {
-      font-size: 1.4rem;
-      color: #f0ece6;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-    }
+.person-info {
+  width: 100%;
+  max-width: 640px;         /* 限制文字行宽，阅读更舒适 */
+}
 
-    .person-info .meta {
-      color: #d4af37;
-      font-size: 0.95rem;
-      margin-bottom: 18px;
-      letter-spacing: 1px;
-    }
+.person-info h3 {
+  font-size: 1.5rem;
+  color: #f0ece6;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
 
-    .person-info p {
-      font-size: 0.98rem;
-      margin-bottom: 12px;
-      line-height: 1.75;
-    }
+.person-info .meta {
+  color: #d4af37;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
 
+.person-info p {
+  font-size: 1rem;
+  margin-bottom: 14px;
+  line-height: 1.8;
+  text-align: justify;      /* 段落仍两端对齐，视觉更正式 */
+}
+    @media (max-width: 768px) {
+  /* ... 其他原有样式保持不变 ... */
+
+  .person-card {
+    padding: 30px 20px;
+    gap: 22px;
+  }
+
+  .person-avatar {
+    max-width: 260px;       /* 手机上略小一点 */
+  }
+
+  .person-info p {
+    text-align: left;       /* 小屏可改为左对齐，更易读 */
+  }
+
+  /* 原来的这些可以删掉或覆盖：
+  .person-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 25px;
+  }
+  .person-avatar {
+    width: 140px;
+    height: 175px;
+  }
+  */
+}
     /* 证据板块 */
     .evidence-text {
       margin-bottom: 40px;
